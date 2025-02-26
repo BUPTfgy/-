@@ -1,0 +1,281 @@
+{% load static %}   <!-- 模板标签加载静态文件路径，也可以改成 load staticfiles -->
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/index.css' %}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+</head>
+<body>
+        <!-- 导航栏 -->
+        <div style="background-color: rgb(255, 255, 255);height: 25px;padding: 15px 250px;">
+           <a href="./" style="text-decoration: none;color:#000;font-size: 18px;"><strong>刷新网页</strong></a>
+        </div>
+
+        <!-- 导航栏以下 -->
+        <div style="display: flex;flex-direction: column;height: 100vh;">
+           
+           <!-- 上部分 -->
+            <div style="background-color:#F8F7Fc;flex: 25%;text-align: center;">
+                <h1 style="margin-top:4%;font-family:'黑体';font-size:40px;">电脑配置方案推荐助手</h1>
+                <form style="margin-top:3%;">
+                   <div style="display: flex; justify-content: center;">
+                       <div style="display: flex;justify-content: center;align-items: center;">
+                           <input placeholder=“请输入您的需求” class="index_question" id ="question">
+                           <button class ="btn" onclick="submitQuestion(this)">开始生成</button>
+                        </div>
+                    </div>
+                </form>
+                <p>尝试输入“日常办公”等词汇</p>
+        </div>
+
+        <!--下部分-->
+        <div style="background-color:#F8F7Fc;flex:75%;display:flex;flex-direction: column;">
+            <!--下方--上半部分 -->
+           <div style="flex:50% ;display: flex;">
+               <!--左上分区 -->
+               <div style="flex:50%;">
+                    <a>
+                       <div class ="carddiy" style="margin-left: 35%;">
+                           <div class ="top">
+                               <svg xmlns="http://www.w3.org/2000/svg" class ="svg2"height="1em" viewBox="0 0 576 512">
+                                   <style> .svg2{fill:#b197fc;height: 40px;width: 40px;}</style>
+                                   <path d="M386.539 111.485l15.096 248.955-10.979-.275c-36.232-.824-71.64 8.783-102.657 27.997-31.016-19.214-66.424-27.997-102.657-27.997-45.564 0-82.07 10.705-123.516 27.723L93.117 129.6c28.546-11.803 61.484-18.115 92.226-18.115 41.173 0 73.836 13.175 102.657 42.544 27.723-28.271 59.013-41.721 98.539-42.544zM569.07 448c-25.526 0-47.485-5.215-70.542-15.645-34.31-15.645-69.993-24.978-107.871-24.978-38.977 0-74.934 12.901-102.657 40.623-27.723-27.723-63.68-40.623-102.657-40.623-37.878 0-73.561 9.333-107.871 24.978C55.239 442.236 32.731 448 8.303 448H6.93L49.475 98.859C88.726 76.626 136.486 64 181.775 64 218.83 64 256.984 71.685 288 93.095 319.016 71.685 357.17 64 394.225 64c45.289 0 93.049 12.626 132.3 34.859L569.07 448zm-43.368-44.741l-34.036-280.246c-30.742-13.999-67.248-21.41-101.009-21.41-38.428 0-74.385 12.077-102.657 38.702-28.272-26.625-64.228-38.702-102.657-38.702-33.761 0-70.267 7.411-101.009 21.41L50.298 403.259c47.211-19.487 82.894-33.486 135.045-33.486 37.604 0 70.817 9.606 102.657 29.644 31.84-20.038 65.052-29.644 102.657-29.644 52.151 0 87.834 13.999 135.045 33.486z"/>
+                               </svg>
+                           </div>
+                           <div class ="bottom">
+                               <h3 class ="botm_title" id = "title_box1"></h3>
+                               <p class ="botm_ph" id = "content_box1"></p>
+                            </div>
+                            <!-- 隐藏按钮1 -->
+                            <div id="hide_button1" style="display: none;">
+                                <button onclick="getDetail(1)" style="background-color: #844caf; color: white; padding: 8px 15px; text-align: center; text-decoration: none; display: inline-block; font-size: 16px; margin: 10px; cursor: pointer; border: none; border-radius: 5px;">查看详情</button>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+               <!--右上分区 -->
+               <div style="flex:50%;">
+                   <a>
+                       <div class ="carddiy" style="margin-left: 5%;">
+                           <div class ="top">
+                               <svg xmlns="http://www.w3.org/2000/svg" class ="svg2"height="1em" viewBox="0 0 576 512">
+                                   <style> .svg2{fill:#b197fc;height: 40px;width: 40px;}</style>
+                                   <path d="M386.539 111.485l15.096 248.955-10.979-.275c-36.232-.824-71.64 8.783-102.657 27.997-31.016-19.214-66.424-27.997-102.657-27.997-45.564 0-82.07 10.705-123.516 27.723L93.117 129.6c28.546-11.803 61.484-18.115 92.226-18.115 41.173 0 73.836 13.175 102.657 42.544 27.723-28.271 59.013-41.721 98.539-42.544zM569.07 448c-25.526 0-47.485-5.215-70.542-15.645-34.31-15.645-69.993-24.978-107.871-24.978-38.977 0-74.934 12.901-102.657 40.623-27.723-27.723-63.68-40.623-102.657-40.623-37.878 0-73.561 9.333-107.871 24.978C55.239 442.236 32.731 448 8.303 448H6.93L49.475 98.859C88.726 76.626 136.486 64 181.775 64 218.83 64 256.984 71.685 288 93.095 319.016 71.685 357.17 64 394.225 64c45.289 0 93.049 12.626 132.3 34.859L569.07 448zm-43.368-44.741l-34.036-280.246c-30.742-13.999-67.248-21.41-101.009-21.41-38.428 0-74.385 12.077-102.657 38.702-28.272-26.625-64.228-38.702-102.657-38.702-33.761 0-70.267 7.411-101.009 21.41L50.298 403.259c47.211-19.487 82.894-33.486 135.045-33.486 37.604 0 70.817 9.606 102.657 29.644 31.84-20.038 65.052-29.644 102.657-29.644 52.151 0 87.834 13.999 135.045 33.486z"/>
+                                </svg>
+                            </div>
+                            <div class ="bottom">
+                               <h3 class ="botm_title" id = "title_box2"></h3>
+                               <p class ="botm_ph" id = "content_box2"></p>
+                               <!-- 隐藏按钮2 -->
+                               <div id="hide_button2" style="display: none;">
+                               <button onclick="getDetail(2)" style="background-color: #844caf; color: white; padding: 8px 15px; text-align: center; text-decoration: none; display: inline-block; font-size: 16px; margin: 10px; cursor: pointer; border: none; border-radius: 5px;">查看详情</button>
+                            </div>
+                            </div>
+                        </div>
+                    </a>
+               </div>
+            </div>
+            <!--下方--下半部分 -->
+           <div style="flex:50% ;display: flex;">
+               <!--左上分区 -->
+               <div style="flex:50%;">
+                    <a>
+                        <div class ="carddiy" style="margin-left: 35%;">
+                            <div class ="top">
+                                <svg xmlns="http://www.w3.org/2000/svg" class ="svg2"height="1em" viewBox="0 0 576 512">
+                                    <style> .svg2{fill:#b197fc;height: 40px;width: 40px;}</style>
+                                    <path d="M386.539 111.485l15.096 248.955-10.979-.275c-36.232-.824-71.64 8.783-102.657 27.997-31.016-19.214-66.424-27.997-102.657-27.997-45.564 0-82.07 10.705-123.516 27.723L93.117 129.6c28.546-11.803 61.484-18.115 92.226-18.115 41.173 0 73.836 13.175 102.657 42.544 27.723-28.271 59.013-41.721 98.539-42.544zM569.07 448c-25.526 0-47.485-5.215-70.542-15.645-34.31-15.645-69.993-24.978-107.871-24.978-38.977 0-74.934 12.901-102.657 40.623-27.723-27.723-63.68-40.623-102.657-40.623-37.878 0-73.561 9.333-107.871 24.978C55.239 442.236 32.731 448 8.303 448H6.93L49.475 98.859C88.726 76.626 136.486 64 181.775 64 218.83 64 256.984 71.685 288 93.095 319.016 71.685 357.17 64 394.225 64c45.289 0 93.049 12.626 132.3 34.859L569.07 448zm-43.368-44.741l-34.036-280.246c-30.742-13.999-67.248-21.41-101.009-21.41-38.428 0-74.385 12.077-102.657 38.702-28.272-26.625-64.228-38.702-102.657-38.702-33.761 0-70.267 7.411-101.009 21.41L50.298 403.259c47.211-19.487 82.894-33.486 135.045-33.486 37.604 0 70.817 9.606 102.657 29.644 31.84-20.038 65.052-29.644 102.657-29.644 52.151 0 87.834 13.999 135.045 33.486z"/>
+                                </svg>
+                            </div>
+                            <div class ="bottom">
+                                <h3 class ="botm_title"  id = "title_box3"></h3>
+                                <p class ="botm_ph" id = "content_box3"></p>
+                                <!-- 隐藏按钮3 -->
+                                <div id="hide_button3" style="display: none;">
+                                <button onclick="getDetail(3)" style="background-color: #844caf; color: white; padding: 8px 15px; text-align: center; text-decoration: none; display: inline-block; font-size: 16px; margin: 10px; cursor: pointer; border: none; border-radius: 5px;">查看详情</button>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+               </div>
+               <!--右上分区 -->
+            <div style="flex:50%;">
+                <a>
+                    <div class ="carddiy" style="margin-left: 5%;">
+                        <div class ="top">
+                            <svg xmlns="http://www.w3.org/2000/svg" class ="svg2"height="1em" viewBox="0 0 576 512">
+                                <style> .svg2{fill:#b197fc;height: 40px;width: 40px;}</style>
+                                <path d="M386.539 111.485l15.096 248.955-10.979-.275c-36.232-.824-71.64 8.783-102.657 27.997-31.016-19.214-66.424-27.997-102.657-27.997-45.564 0-82.07 10.705-123.516 27.723L93.117 129.6c28.546-11.803 61.484-18.115 92.226-18.115 41.173 0 73.836 13.175 102.657 42.544 27.723-28.271 59.013-41.721 98.539-42.544zM569.07 448c-25.526 0-47.485-5.215-70.542-15.645-34.31-15.645-69.993-24.978-107.871-24.978-38.977 0-74.934 12.901-102.657 40.623-27.723-27.723-63.68-40.623-102.657-40.623-37.878 0-73.561 9.333-107.871 24.978C55.239 442.236 32.731 448 8.303 448H6.93L49.475 98.859C88.726 76.626 136.486 64 181.775 64 218.83 64 256.984 71.685 288 93.095 319.016 71.685 357.17 64 394.225 64c45.289 0 93.049 12.626 132.3 34.859L569.07 448zm-43.368-44.741l-34.036-280.246c-30.742-13.999-67.248-21.41-101.009-21.41-38.428 0-74.385 12.077-102.657 38.702-28.272-26.625-64.228-38.702-102.657-38.702-33.761 0-70.267 7.411-101.009 21.41L50.298 403.259c47.211-19.487 82.894-33.486 135.045-33.486 37.604 0 70.817 9.606 102.657 29.644 31.84-20.038 65.052-29.644 102.657-29.644 52.151 0 87.834 13.999 135.045 33.486z"/>
+                            </svg>
+                        </div>
+                        <div class ="bottom">
+                            <h3 class ="botm_title"  id = "title_box4"></h3>
+                            <p class ="botm_ph" id = "content_box4"></p>
+                            <!-- 隐藏按钮4 -->
+                            <div id="hide_button4" style="display: none;">
+                                <button onclick="getDetail(4)" style="background-color: #844caf; color: white; padding: 8px 15px; text-align: center; text-decoration: none; display: inline-block; font-size: 16px; margin: 10px; cursor: pointer; border: none; border-radius: 5px;">查看详情</button>
+                                </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+
+            <script>
+                let question = "";//全局变量
+
+                function submitQuestion(buttonElement) {
+                       const questionInput = document.getElementById('question').value.trim();//去除输入内容的前后空格
+                    // 将问题赋值给 question 变量
+                    if(questionInput===""){    //当输入内容为空直接返回
+                        return;
+                    }
+                    question = questionInput;
+                
+                    //返回前禁用button
+                    buttonElement.innerText ='正在加载...';
+                    buttonElement.disabled = true;
+                
+                    fetch(`/ask?question=${encodeURIComponent(question)}`)
+                        .then(response => response.json())
+                        .then(data => {
+                            const moduleTitles = [];
+                            const moduleContents = [];
+                            for (let i = 0;i < data.length ; i++)
+                            {
+                                let moduleTitle = data[i]["模块主题"];
+                                let moduleContent = data[i]["本模块内容简介"];
+                                moduleTitles.push(moduleTitle);
+                                moduleContents.push(moduleContent);
+                                document.getElementById(`title_box${i+1}`).innerText = moduleTitle;
+                                document.getElementById(`content_box${i+1}`).innerText = moduleContent;
+                
+                
+                            }
+                            buttonElement.innerText = '提交'; // 恢复按钮文本
+                            buttonElement.disabled = false; // 启用按钮
+                            hide_button1.style.display = 'inline-block'; // 显示查看详情按钮1
+                            hide_button2.style.display = 'inline-block'; // 显示查看详情按钮2
+                            hide_button3.style.display = 'inline-block'; // 显示查看详情按钮3
+                            hide_button4.style.display = 'inline-block'; // 显示查看详情按钮4
+                        })
+                        .catch((error) => {
+                            console.error('Error:', error);
+                        });
+                } 
+            </script>
+            
+            <script>
+                function getDetail(num) {
+                    var detail_title = "";
+                    var detail_content = "";
+                    
+                    switch(num) {
+                        case 1:
+                            detail_title = document.getElementById('title_box1').innerText;
+                            detail_content = document.getElementById('content_box1').innerText;
+                            break;
+                        case 2:
+                            detail_title = document.getElementById('title_box2').innerText;
+                            detail_content = document.getElementById('content_box2').innerText;
+                            break;
+                        case 3:
+                            detail_title = document.getElementById('title_box3').innerText;
+                            detail_content = document.getElementById('content_box3').innerText;
+                            break;
+                        case 4:
+                            detail_title = document.getElementById('title_box4').innerText;
+                            detail_content = document.getElementById('content_box4').innerText;
+                            break;
+                        default:
+                            detail_title = "未知标题";
+                            detail_content = "未知内容";
+                    }
+                    
+                    console.log("标题: " + detail_title);
+                    console.log("内容: " + detail_content);
+            
+                    if (detail_title === "未知标题") {
+                        return;
+                    }
+            
+                    const detail_buttonElement = document.getElementById('hide_button' + num);
+                    detail_buttonElement.innerText = '正在加载...';
+                    detail_buttonElement.disabled = true;
+            
+                    fetch(`/getdetail?detail_title=${encodeURIComponent(detail_title)}&detail_content=${encodeURIComponent(detail_content)}`)
+                        .then(response => response.json())
+                        .then(data => {
+                            const detail_displayElement = document.getElementById('display_text');
+                            detail_displayElement.innerHTML = '';
+                            data.forEach(item => {
+                                detail_displayElement.innerHTML += `<p>————————配置方案————————</p>`;
+                                detail_displayElement.innerHTML += `<p>方案主题: ${item["方案主题"]}</p>`;
+                                detail_displayElement.innerHTML += `<p>CPU:${item["CPU"]}</p>`;
+                                detail_displayElement.innerHTML += `<p>主板:${item["主板"]}</p>`;
+                                detail_displayElement.innerHTML += `<p>内存:${item["内存"]}</p>`;
+                                detail_displayElement.innerHTML += `<p>存储设备:${item["存储设备"]}</p>`;
+                                detail_displayElement.innerHTML += `<p>图形卡:${item["图形卡"]}</p>`;
+                                detail_displayElement.innerHTML += `<p>电源供应器:${item["电源供应器"]}</p>`;
+                                detail_displayElement.innerHTML += `<p>机箱:${item["机箱"]}</p>`;
+                                detail_displayElement.innerHTML += `<p>散热器:${item["散热器"]}</p>`;
+                                detail_displayElement.innerHTML += `<p>风扇:${item["风扇"]}</p>`;
+                                detail_displayElement.innerHTML += `<p>显示器:${item["显示器"]}</p>`;
+                                detail_displayElement.innerHTML += `<p>键盘和鼠标:${item["键盘和鼠标"]}</p>`;
+                                detail_displayElement.innerHTML += `<p>操作系统:${item["操作系统"]}</p>`;
+                                detail_displayElement.innerHTML += `<p>——————————————————————</p>`;
+                            });
+            
+                            detail_buttonElement.innerText = '完成';
+                            detail_buttonElement.disabled = false;
+                        })
+                        .catch((error) => {
+                            console.error('Error:', error);
+                            detail_buttonElement.innerText = '错误';
+                            detail_buttonElement.disabled = false;
+                        });
+                }
+            </script>
+            
+            
+            
+
+        </div>
+
+        <div id="display_text" style="text-align: center; border: 2px solid; border-image: linear-gradient(to right, #ffcc00, #ff6666); padding: 10px;">"详细方案显示区域"</div>
+        
+        <style>
+            #display_text {
+                text-align: left; /* 左对齐 */
+                border: 2px solid; /* 边框 */
+                border-image: linear-gradient(to right, #ffcc00, #ff6666); /* 边框渐变 */
+                padding: 20px; /* 内边距 */
+                margin: 20px; /* 外边距 */
+                background-color: #f9f9f9; /* 背景色 */
+                border-radius: 10px; /* 边框圆角 */
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* 阴影效果 */
+                max-width: 800px; /* 最大宽度 */
+                margin: 0 auto; /* 居中 */
+                font-family: Arial, sans-serif; /* 字体 */
+                line-height: 1.6; /* 行高 */
+            }
+        
+            #display_text p {
+                margin: 10px 0; /* 段落间距 */
+            }
+        
+            #display_text h3 {
+                color: #333; /* 标题颜色 */
+                font-size: 20px; /* 标题字号 */
+                margin-bottom: 10px; /* 标题下边距 */
+            }
+        
+            #display_text strong {
+                color: #ff6666; /* 强调文字颜色 */
+            }
+        </style>
+        
+</body>
+</html>
